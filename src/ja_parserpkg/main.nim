@@ -1,28 +1,26 @@
 
+import system
 import private/main_impl
+import private/text_que
 import docopt
-import os
-import ../../util/debug
+import strutils, pegs, unicode
+import unicode
 
-# スレッド処理
-proc threadFunc(param: tuple[a, b: int]) {.thread.} =
-  for x in param.a..param.b:
-    debug x
-    sleep(1000)
 
 proc main*(args: Table[string, Value]): int =
-  result = 0
-  let name = $args["<name>"]
-  echo say_hello_to(name)
+    result = 0
+    let name = $args["<filename>"]
+    echo main_impl.say_hello_to(name)
 
-  # スレッドサンプル
-  var thr: array[0..1, Thread[tuple[a, b: int]]]
-  debug "start threads"
-  thr[0].createThread(threadFunc, (1, 5))
-  thr[1].createThread(threadFunc, (6, 10))
-  debug "wait threads"
-  # sleep(1000)
-  joinThreads(thr)
+    let count: int = len(name.toRunes)
+    let countStr: string = intToStr(count)
+    echo("文字数は" & countStr)
+    echo(name.toRunes[3])
+
+    let input: string = readLine(stdin)
+    stdout.writeLine("inputed: " & input)
+  
+
 
 
 

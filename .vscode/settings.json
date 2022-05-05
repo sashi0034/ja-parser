@@ -6,7 +6,7 @@
     //     "chcp ",
     //     "65001 "
     // ],
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "editor.insertSpaces": true,
 
     // Nim project file, if empty use current selected.
@@ -16,7 +16,7 @@
     "nim.test-project": "",
 
     // Execute build task from tasks.json file on save.
-    "nim.buildOnSave": true,
+    // "nim.buildOnSave": true,
 
     // Nim build command (c, cpp, doc, etc)
     "nim.buildCommand": "c",
