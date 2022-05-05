@@ -10,7 +10,7 @@ let doc = """
 ja_parser.
 
 Usage:
-  ja_parser [--sample=<sample>] <filename>
+  ja_parser [--sample=<sample>] [<filename>]
   ja_parser (-h | --help)
   ja_parser (-v | --version)
 
