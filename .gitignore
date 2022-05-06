@@ -3,3 +3,4 @@ bin/*
 *.exe
 *.backup
 learning_data/
+res.txt

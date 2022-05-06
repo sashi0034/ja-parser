@@ -32,7 +32,7 @@ func makeVectorsFromIndexes(indexSeq: ref seq[int], rawSize: int): OneOfNMatrix 
         result[].add(newRaw)
 
 
-func makeOneOfNVecFromGramList*(gramList: GramList): OneOfNMatrix =
+func makeOneOfNMatFromGramList*(gramList: GramList): OneOfNMatrix =
     var appearedSet: OneGramTable = new(OneGramTable)
     var indexSeq: ref seq[int] = new(seq[int])
 

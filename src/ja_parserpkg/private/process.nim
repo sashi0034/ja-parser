@@ -5,10 +5,11 @@ import unicode
 import one_gram
 import gram_que
 import one_of_n
+import gen_text_from_2gram
 
 
 proc startProcess*(fileName: string) =
-    # const parseSize = 2
+    const parseSize = 2
     let inputText: seq[Rune] = readFile(fileName).toRunes
 
     # var que = newTextQue(parseSize)
@@ -25,9 +26,11 @@ proc startProcess*(fileName: string) =
     #     gramQue.push(gram)
     #     if i>=2: gramQue.writeQue
         
-    let vec: OneOfNMatrix = makeOneOfNVecFromGramList(gramList)
+    let mat: OneOfNMatrix = makeOneOfNMatFromGramList(gramList)
 
-    for raw in vec[]:
-        echo $raw[]
+    # for raw in vec[]:
+    #     echo $raw[]
 
+    let generatedStr = generateTextFrom2Gram(mat, gramList, 0, 256)
+    echo generatedStr
 
