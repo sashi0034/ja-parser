@@ -2,6 +2,7 @@
 import system
 import text_que
 import unicode
+import one_gram
 
 
 proc startProcess*() =
@@ -14,7 +15,12 @@ proc startProcess*() =
         que.push(inputText[i])
         echo que.getTextDataAsString
     
-    
+    let test = one_gram.splitTextIntoOneGrams(inputText)
+    for ele in test:
+        
+        echo $ele.getTextData
+
+
     
 
 
