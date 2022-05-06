@@ -1,0 +1,1 @@
+nimble build; ./bin/ja_parser learning_data/test.txt | sort | uniq -c | sort -n
