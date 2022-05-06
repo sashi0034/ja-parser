@@ -48,6 +48,12 @@ func utf8ToUcs4(letter: string): uint32 =
 
 
 func chaeckLetterType(letter: string): ELetter =
+    case letter:
+    of "\t", "\n":
+        return ELetter.Space
+    else:
+        discard
+
     let code: uint32 = letter.utf8ToUcs4
 
     case code

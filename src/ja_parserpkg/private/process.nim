@@ -4,10 +4,11 @@ import text_que
 import unicode
 import one_gram
 import gram_que
+import one_of_n
 
 
 proc startProcess*(fileName: string) =
-    const parseSize = 2
+    # const parseSize = 2
     let inputText: seq[Rune] = readFile(fileName).toRunes
 
     # var que = newTextQue(parseSize)
@@ -18,13 +19,15 @@ proc startProcess*(fileName: string) =
     
     let gramList = one_gram.splitTextIntoOneGrams(inputText)
 
-    var gramQue = createGramQue(parseSize)
+    # var gramQue = createGramQue(parseSize)
 
-    for gram in gramList[]:
-        gramQue.push(gram)
-        gramQue.writeQue
+    # for i, gram in gramList[]:
+    #     gramQue.push(gram)
+    #     if i>=2: gramQue.writeQue
         
-    
+    let vec: OneOfNMatrix = makeOneOfNVecFromGramList(gramList)
 
+    for raw in vec[]:
+        echo $raw[]
 
 
