@@ -2,7 +2,9 @@ import system
 import unicode
 
 type OneGram* = ref object
-    textData: seq[Rune]
+    textData: ref seq[Rune]
+
+type GramList* = ref seq[OneGram]
 
 type ELetter = enum 
     None
@@ -10,12 +12,17 @@ type ELetter = enum
     Katakana
     Hiragana
     Punctuation
+    Space
     Others
 
+func createOneGram*(text: ref seq[Rune]): OneGram =
+    return OneGram(textData: text)
 
-func getTextData*(self: OneGram): seq[Rune] =
+func getTextData*(self: OneGram): ref seq[Rune] =
     return self.textData
 
+func getTextDataAsString*(self: OneGram): string =
+    return $self.textData[]
 
 func utf8ToUcs4(letter: string): uint32 = 
     const base: array[7, uint32] = [
@@ -42,7 +49,7 @@ func utf8ToUcs4(letter: string): uint32 =
 
 func chaeckLetterType(letter: string): ELetter =
     let code: uint32 = letter.utf8ToUcs4
-    
+
     case code
     of 0x3040..0x309f:
         return ELetter.Hiragana
@@ -52,27 +59,34 @@ func chaeckLetterType(letter: string): ELetter =
         return ELetter.Kanji
     of 0x3001..0x3002, 0xff0c..0xff0e, 0x002c, 0x002e:
         return ELetter.Punctuation
+    of 0x0020, 0x3000:
+        return ELetter.Space
     else:
         return ELetter.Others
 
 
-func splitTextIntoOneGrams*(inputText: seq[Rune]): seq[OneGram] =
-    result = @[]
+func splitTextIntoOneGrams*(inputText: seq[Rune]): GramList =
+    result = new seq[OneGram]
+    result[] = @[]
 
-    var tempQue: seq[Rune] = @[]
+    var tempQue: ref seq[Rune] = new seq[Rune]
     var tempType: ELetter = ELetter.None
 
     for i, nextLetter in inputText:
         let nextType = chaeckLetterType(nextLetter.toUTF8)
 
-        debugEcho("", $nextLetter & " ,  " &  $nextType )
+        #debugEcho("", $nextLetter & " ,  " &  $nextType )
 
         if nextType==tempType:
-            tempQue.add(nextLetter)
+            tempQue[].add(nextLetter)
         else:
-            result.add(OneGram(textData: tempQue))
-            tempQue = @[nextLetter]
-            tempType = nextType
+            if tempType!=ELetter.Space:
+                result[].add(OneGram(textData: tempQue))
 
+            tempQue = new seq[Rune]
+            tempQue[].add(nextLetter)
+            tempType = nextType
+            
+    result[].add(OneGram(textData: tempQue))
 
 
